@@ -148,6 +148,7 @@ class _DisplayFactionsState extends State<DisplayFactions> {
     }
 
     return Scaffold(
+
       appBar: AppBar(
         title: Text(widget.title),
       ),
