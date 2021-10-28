@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 class Factions extends StatelessWidget {
-  Factions({this.title, this.numberOfPlayers, this.nameOfPlayers});
+  Factions(
+      {this.title,
+      this.numberOfPlayers,
+      this.nameOfPlayers,
+      this.numberOfBots});
 
   final String title;
   final int numberOfPlayers;
+  final int numberOfBots;
   final List<String> nameOfPlayers;
 
   @override
@@ -18,33 +23,57 @@ class Factions extends StatelessWidget {
       home: DisplayFactions(
           title: title,
           numberOfPlayers: numberOfPlayers,
-          nameOfPlayers: nameOfPlayers),
+          nameOfPlayers: nameOfPlayers,
+          numberOfBots: numberOfBots),
     );
   }
 }
 
 class DisplayFactions extends StatefulWidget {
-  DisplayFactions({this.title, this.numberOfPlayers, this.nameOfPlayers});
+  DisplayFactions(
+      {this.title,
+      this.numberOfPlayers,
+      this.nameOfPlayers,
+      this.numberOfBots});
 
   final String title;
   final int numberOfPlayers;
+  final int numberOfBots;
   final List<String> nameOfPlayers;
 
   @override
   _DisplayFactionsState createState() => _DisplayFactionsState(
-      numberOfPlayers: numberOfPlayers, nameOfPlayers: nameOfPlayers);
+      numberOfPlayers: numberOfPlayers,
+      nameOfPlayers: nameOfPlayers,
+      numberOfBots: numberOfBots);
 }
 
 class _DisplayFactionsState extends State<DisplayFactions> {
-  _DisplayFactionsState({this.numberOfPlayers, this.nameOfPlayers});
+  _DisplayFactionsState(
+      {this.numberOfPlayers, this.nameOfPlayers, this.numberOfBots});
 
   final int numberOfPlayers;
+  final int numberOfBots;
   final List<String> nameOfPlayers;
 
   final List<String> faction2j = [
     'Marquise de Chat',
     'Duché Souterrain',
     'Dynastie de la Canopée',
+  ];
+
+  final List<String> nameOfBots = [
+    'Premier bot',
+    'Second bot',
+    'Troisième bot',
+    'Quatrième bot',
+  ];
+
+  final List<String> factionBots = [
+    'Marquise Mécanique 2.0',
+    'Canopée Électrique',
+    'Alliance Automatisée',
+    'Vagabot',
   ];
 
   final List<String> faction = [
@@ -77,6 +106,20 @@ class _DisplayFactionsState extends State<DisplayFactions> {
     'Culte des Lézards',
   ];
 
+  List<String> unselectedFactionBots = [
+    'Marquise Mécanique 2.0',
+    'Canopée Électrique',
+    'Alliance Automatisée',
+    'Vagabot',
+  ];
+
+  final Map<String, int> factionBotValue = {
+    'Marquise Mécanique 2.0': 10,
+    'Canopée Électrique': 7,
+    'Vagabot': 5,
+    'Alliance Automatisée': 3,
+  };
+
   final Map<String, int> factionValue = {
     'Marquise de Chat': 10,
     'Duché Souterrain': 8,
@@ -103,23 +146,49 @@ class _DisplayFactionsState extends State<DisplayFactions> {
 
   Map<String, String> result = {};
 
+  Map<String, String> resultBots = {};
+
   int total = 0;
 
   int i = 0;
+
+  int j = 0;
 
   Random random = new Random();
 
   @override
   Widget build(BuildContext context) {
-    while (total <= weight[numberOfPlayers]) {
+    while (total <= weight[numberOfPlayers + numberOfBots]) {
       unselectedFaction.clear();
-      if (numberOfPlayers == 2) {
-        unselectedFaction.addAll(faction2j);
-      } else {
-        unselectedFaction.addAll(faction);
-      }
+      unselectedFaction.addAll(faction);
+
       i = 0;
+      j = 0;
       total = 0;
+
+      if (numberOfBots >= 1) {
+        while (j < numberOfBots) {
+          int selection = random.nextInt(unselectedFactionBots.length);
+          String selectedFactionBots = unselectedFactionBots[selection];
+          unselectedFactionBots.remove(selectedFactionBots);
+          total = total + factionBotValue[selectedFactionBots];
+          resultBots[nameOfBots[j]] = selectedFactionBots;
+          if (selectedFactionBots == 'Vagabot') {
+            unselectedFaction.remove('Vagabond (premier)');
+            unselectedFaction.add('Vagabond (second)');
+          }
+          if (selectedFactionBots == 'Marquise Mécanique 2.0') {
+            unselectedFaction.remove('Marquise de Chat');
+          }
+          if (selectedFactionBots == 'Canopée Électrique') {
+            unselectedFaction.remove('Dynastie de la Canopée');
+          }
+          if (selectedFactionBots == 'Alliance Automatisée') {
+            unselectedFaction.remove('Alliance de la Forêt');
+          }
+          j++;
+        }
+      }
 
       while (i < numberOfPlayers) {
         int selection = random.nextInt(unselectedFaction.length);
@@ -136,6 +205,18 @@ class _DisplayFactionsState extends State<DisplayFactions> {
 
     List<Widget> resultDisplay() {
       List<Widget> list = [];
+
+      if (numberOfBots >= 1) {
+        for (int i = 0; i < numberOfBots; i++) {
+          list.add(
+            Text(
+              nameOfBots[i] + ' : ' + resultBots[nameOfBots[i]],
+              style: TextStyle(fontSize: 20),
+            ),
+          );
+        }
+      }
+
       for (int i = 0; i < numberOfPlayers; i++) {
         list.add(
           Text(
@@ -148,7 +229,6 @@ class _DisplayFactionsState extends State<DisplayFactions> {
     }
 
     return Scaffold(
-
       appBar: AppBar(
         title: Text(widget.title),
       ),
@@ -162,5 +242,3 @@ class _DisplayFactionsState extends State<DisplayFactions> {
     );
   }
 }
-
-

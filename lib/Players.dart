@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:root_faction_aleatoire/Factions.dart';
+
+import 'Bots.dart';
 
 class Players extends StatelessWidget {
   Players({this.title, this.numberOfPlayers});
@@ -78,8 +79,8 @@ class _DisplayPlayersState extends State<DisplayPlayers> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => Factions(
-                      title: 'Root : Assignation des factions',
+                builder: (context) => Bots(
+                      title: 'Root : Nombre de bots',
                       numberOfPlayers: numberOfPlayers,
                       nameOfPlayers: playerList,
                     )),
