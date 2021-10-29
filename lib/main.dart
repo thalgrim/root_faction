@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _decrementCounter() {
     setState(() {
-      if (_counter > 2) {
+      if (_counter > 1) {
         _counter--;
       }
     });
@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Text(
                   "Nombre de joueurs :",
-                  style: TextStyle(height: -1, fontSize: 40),
+                  style: TextStyle(height: -1, fontSize: 35),
                 ),
               ],
             ),
@@ -123,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     numberOfPlayers: _counter)),
           );
         },
-        child: Icon(Icons.arrow_forward),
+        child: Text('OK')
       ),
     );
   }

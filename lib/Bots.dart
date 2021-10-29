@@ -16,7 +16,11 @@ class Bots extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: DisplayBots(title: title, numberOfPlayers: numberOfPlayers, nameOfPlayers: nameOfPlayers,),
+      home: DisplayBots(
+        title: title,
+        numberOfPlayers: numberOfPlayers,
+        nameOfPlayers: nameOfPlayers,
+      ),
     );
   }
 }
@@ -28,10 +32,9 @@ class DisplayBots extends StatefulWidget {
   final int numberOfPlayers;
   final List<String> nameOfPlayers;
 
-
   @override
-  _DisplayBotsState createState() =>
-      _DisplayBotsState(numberOfPlayers: numberOfPlayers, nameOfPlayers: nameOfPlayers);
+  _DisplayBotsState createState() => _DisplayBotsState(
+      numberOfPlayers: numberOfPlayers, nameOfPlayers: nameOfPlayers);
 }
 
 class _DisplayBotsState extends State<DisplayBots> {
@@ -40,7 +43,7 @@ class _DisplayBotsState extends State<DisplayBots> {
   final int numberOfPlayers;
   final List<String> nameOfPlayers;
 
-  int _counter = 0;
+  int _counter = 1;
 
   void _incrementCounter() {
     setState(() {
@@ -52,8 +55,14 @@ class _DisplayBotsState extends State<DisplayBots> {
 
   void _decrementCounter() {
     setState(() {
-      if (_counter > 0) {
-        _counter--;
+      if (numberOfPlayers == 1) {
+        if (_counter > 1) {
+          _counter--;
+        }
+      } else {
+        if (_counter > 0) {
+          _counter--;
+        }
       }
     });
   }
@@ -131,14 +140,14 @@ class _DisplayBotsState extends State<DisplayBots> {
             context,
             MaterialPageRoute(
                 builder: (context) => Factions(
-                  title: 'Root : Assignation des factions',
-                  numberOfPlayers: numberOfPlayers,
-                  nameOfPlayers: nameOfPlayers,
-                  numberOfBots: _counter,
-                )),
+                      title: 'Root : Assignation des factions',
+                      numberOfPlayers: numberOfPlayers,
+                      nameOfPlayers: nameOfPlayers,
+                      numberOfBots: _counter,
+                    )),
           );
         },
-        child: Icon(Icons.arrow_forward),
+        child: Text('OK'),
       ),
     );
   }

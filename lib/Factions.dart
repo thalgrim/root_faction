@@ -161,6 +161,8 @@ class _DisplayFactionsState extends State<DisplayFactions> {
     while (total <= weight[numberOfPlayers + numberOfBots]) {
       unselectedFaction.clear();
       unselectedFaction.addAll(faction);
+      unselectedFactionBots.clear();
+      unselectedFactionBots.addAll(factionBots);
 
       i = 0;
       j = 0;
@@ -209,9 +211,35 @@ class _DisplayFactionsState extends State<DisplayFactions> {
       if (numberOfBots >= 1) {
         for (int i = 0; i < numberOfBots; i++) {
           list.add(
-            Text(
-              nameOfBots[i] + ' : ' + resultBots[nameOfBots[i]],
-              style: TextStyle(fontSize: 20),
+            Column(
+              children: <Widget>[
+                SizedBox(
+                  width: double.infinity,
+                  child: Container(
+                    child: Text(
+                      nameOfBots[i] + ' : ',
+                      style: TextStyle(fontSize: 20),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+          list.add(
+            Column(
+              children: <Widget>[
+                SizedBox(
+                  width: double.infinity,
+                  child: Container(
+                    child: Text(
+                      resultBots[nameOfBots[i]],
+                      style: TextStyle(fontSize: 20),
+                      textAlign: TextAlign.right,
+                    ),
+                  ),
+                ),
+              ],
             ),
           );
         }
@@ -219,9 +247,35 @@ class _DisplayFactionsState extends State<DisplayFactions> {
 
       for (int i = 0; i < numberOfPlayers; i++) {
         list.add(
-          Text(
-            nameOfPlayers[i] + ' : ' + result[nameOfPlayers[i]],
-            style: TextStyle(fontSize: 20),
+          Column(
+            children: <Widget>[
+              SizedBox(
+                width: double.infinity,
+                child: Container(
+                  child: Text(
+                    nameOfPlayers[i] + ' : ',
+                    style: TextStyle(fontSize: 20),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+        list.add(
+          Column(
+            children: <Widget>[
+              SizedBox(
+                width: double.infinity,
+                child: Container(
+                  child: Text(
+                    result[nameOfPlayers[i]],
+                    style: TextStyle(fontSize: 20),
+                    textAlign: TextAlign.right,
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       }
@@ -233,7 +287,7 @@ class _DisplayFactionsState extends State<DisplayFactions> {
         title: Text(widget.title),
       ),
       body: Container(
-        margin: const EdgeInsets.only(left: 40.0, right: 20.0),
+        margin: const EdgeInsets.only(left: 40.0, right: 40.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: resultDisplay(),
