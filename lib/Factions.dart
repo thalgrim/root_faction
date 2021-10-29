@@ -56,12 +56,6 @@ class _DisplayFactionsState extends State<DisplayFactions> {
   final int numberOfBots;
   final List<String> nameOfPlayers;
 
-  final List<String> faction2j = [
-    'Marquise de Chat',
-    'Duché Souterrain',
-    'Dynastie de la Canopée',
-  ];
-
   final List<String> nameOfBots = [
     'Premier bot',
     'Second bot',
