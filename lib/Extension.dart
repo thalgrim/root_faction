@@ -1,30 +1,33 @@
 import 'package:flutter/material.dart';
-import 'PlayerNumber.dart';
+import 'package:root_faction_aleatoire/PlayerNumber.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Root : Sélection aléatoire de faction',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Root : Choix des extensions'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class Extension extends StatelessWidget {
+  Extension({this.title});
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: title,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: DisplayExtension(
+          title: title,
+        ));
+  }
+}
+
+class DisplayExtension extends StatefulWidget {
+  DisplayExtension({
+    this.title,
+  });
+
+  final String title;
+
+  @override
+  _DisplayExtensionState createState() => _DisplayExtensionState();
 }
 
 Map<String, bool> extensionList = {
@@ -33,7 +36,7 @@ Map<String, bool> extensionList = {
   'Fan faction saison 1': false,
 };
 
-class _MyHomePageState extends State<MyHomePage> {
+class _DisplayExtensionState extends State<DisplayExtension> {
   Widget switchExtension1() {
     return Row(
       children: [

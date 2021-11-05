@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'Bots.dart';
 import 'Factions.dart';
+import 'main.dart';
 
 class Players extends StatelessWidget {
-  Players({this.title, this.numberOfPlayers});
+  Players({this.title, this.numberOfPlayers, this.extensionList});
 
   final String title;
   final int numberOfPlayers;
+  final Map<String, bool> extensionList;
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +24,11 @@ class Players extends StatelessWidget {
 }
 
 class DisplayPlayers extends StatefulWidget {
-  DisplayPlayers({this.title, this.numberOfPlayers});
+  DisplayPlayers({this.title, this.numberOfPlayers, this.extensionList});
 
   final String title;
   final int numberOfPlayers;
+  final Map<String, bool> extensionList;
 
   @override
   _DisplayPlayersState createState() =>
@@ -52,11 +55,13 @@ class _DisplayPlayersState extends State<DisplayPlayers> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => Factions(
+                builder: (context) =>
+                    Factions(
                       title: 'Root : Assignation des factions',
                       numberOfPlayers: numberOfPlayers,
                       nameOfPlayers: playerList,
                       numberOfBots: 0,
+                      extensionList: extensionList,
                     )),
           );
         },
@@ -68,10 +73,12 @@ class _DisplayPlayersState extends State<DisplayPlayers> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => Bots(
+                builder: (context) =>
+                    Bots(
                       title: 'Root : Nombre de bots',
                       numberOfPlayers: numberOfPlayers,
                       nameOfPlayers: playerList,
+                      extensionList: extensionList,
                     )),
           );
         },

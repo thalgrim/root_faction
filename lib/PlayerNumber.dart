@@ -1,87 +1,52 @@
 import 'package:flutter/material.dart';
 
-import 'Factions.dart';
+import 'Players.dart';
+import 'main.dart';
 
-class Bots extends StatelessWidget {
-  const Bots(
-      {this.title,
-      this.numberOfPlayers,
-      this.nameOfPlayers,
-      this.extensionList});
+class PlayerNumber extends StatelessWidget {
+  PlayerNumber({this.title, this.extensionList});
 
   final String title;
-  final int numberOfPlayers;
-  final List<String> nameOfPlayers;
   final Map<String, bool> extensionList;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: title,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: DisplayBots(
         title: title,
-        numberOfPlayers: numberOfPlayers,
-        nameOfPlayers: nameOfPlayers,
-        extensionList: extensionList,
-      ),
-    );
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: DisplayPlayerNumber(
+          title: title,
+        ));
   }
 }
 
-class DisplayBots extends StatefulWidget {
-  const DisplayBots(
-      {this.title,
-      this.numberOfPlayers,
-      this.nameOfPlayers,
-      this.extensionList});
+class DisplayPlayerNumber extends StatefulWidget {
+  DisplayPlayerNumber({this.title, this.extensionList});
 
   final String title;
-  final int numberOfPlayers;
-  final List<String> nameOfPlayers;
   final Map<String, bool> extensionList;
 
   @override
-  _DisplayBotsState createState() => _DisplayBotsState(
-      numberOfPlayers: numberOfPlayers, nameOfPlayers: nameOfPlayers, extensionList: extensionList);
+  _DisplayPlayerNumberState createState() => _DisplayPlayerNumberState();
 }
 
-class _DisplayBotsState extends State<DisplayBots> {
-  _DisplayBotsState(
-      {this.numberOfPlayers, this.nameOfPlayers, this.extensionList});
-
-  final int numberOfPlayers;
-  final List<String> nameOfPlayers;
-  final Map<String, bool> extensionList;
-
-  int _counter = 1;
+class _DisplayPlayerNumberState extends State<DisplayPlayerNumber> {
+  int _counter = 2;
 
   void _incrementCounter() {
     setState(() {
-      if (extensionList['Monde souterrain']) {
-        if (_counter < 6 - numberOfPlayers && _counter < 4) {
-          _counter++;
-        }
-      } else {
-        if (_counter < 6 - numberOfPlayers && _counter < 1) {
-          _counter++;
-        }
+      if (_counter < 6) {
+        _counter++;
       }
     });
   }
 
   void _decrementCounter() {
     setState(() {
-      if (numberOfPlayers == 1) {
-        if (_counter > 1) {
-          _counter--;
-        }
-      } else {
-        if (_counter > 0) {
-          _counter--;
-        }
+      if (_counter > 1) {
+        _counter--;
       }
     });
   }
@@ -101,8 +66,8 @@ class _DisplayBotsState extends State<DisplayBots> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  "Nombre de bots :",
-                  style: TextStyle(height: -1, fontSize: 40),
+                  "Nombre de joueurs :",
+                  style: TextStyle(height: -1, fontSize: 35),
                 ),
               ],
             ),
@@ -154,21 +119,17 @@ class _DisplayBotsState extends State<DisplayBots> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Factions(
-                      title: 'Root : Assignation des factions',
-                      numberOfPlayers: numberOfPlayers,
-                      nameOfPlayers: nameOfPlayers,
-                      numberOfBots: _counter,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Players(
+                      title: 'Root : Définir les joueurs',
                       extensionList: extensionList,
-                    )),
-          );
-        },
-        child: Text('OK'),
-      ),
+                      numberOfPlayers: _counter)),
+            );
+          },
+          child: Text('OK')),
     );
   }
 }

@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 class Factions extends StatelessWidget {
-  Factions(
-      {this.title,
-      this.numberOfPlayers,
-      this.nameOfPlayers,
-      this.numberOfBots});
+  Factions({this.title,
+    this.numberOfPlayers,
+    this.nameOfPlayers,
+    this.numberOfBots,
+    this.extensionList});
 
   final String title;
   final int numberOfPlayers;
   final int numberOfBots;
   final List<String> nameOfPlayers;
+  final Map<String, bool> extensionList;
 
   @override
   Widget build(BuildContext context) {
@@ -24,37 +25,43 @@ class Factions extends StatelessWidget {
           title: title,
           numberOfPlayers: numberOfPlayers,
           nameOfPlayers: nameOfPlayers,
-          numberOfBots: numberOfBots),
+          numberOfBots: numberOfBots,
+          extensionList: extensionList),
     );
   }
 }
 
 class DisplayFactions extends StatefulWidget {
-  DisplayFactions(
-      {this.title,
-      this.numberOfPlayers,
-      this.nameOfPlayers,
-      this.numberOfBots});
+  DisplayFactions({this.title,
+    this.numberOfPlayers,
+    this.nameOfPlayers,
+    this.numberOfBots,
+    this.extensionList});
 
   final String title;
   final int numberOfPlayers;
   final int numberOfBots;
   final List<String> nameOfPlayers;
+  final Map<String, bool> extensionList;
 
   @override
-  _DisplayFactionsState createState() => _DisplayFactionsState(
-      numberOfPlayers: numberOfPlayers,
-      nameOfPlayers: nameOfPlayers,
-      numberOfBots: numberOfBots);
+  _DisplayFactionsState createState() =>
+      _DisplayFactionsState(
+          numberOfPlayers: numberOfPlayers,
+          nameOfPlayers: nameOfPlayers,
+          numberOfBots: numberOfBots,
+          extensionList: extensionList
+      );
 }
 
 class _DisplayFactionsState extends State<DisplayFactions> {
   _DisplayFactionsState(
-      {this.numberOfPlayers, this.nameOfPlayers, this.numberOfBots});
+      {this.numberOfPlayers, this.nameOfPlayers, this.numberOfBots, this.extensionList});
 
   final int numberOfPlayers;
   final int numberOfBots;
   final List<String> nameOfPlayers;
+  final Map<String, bool> extensionList;
 
   final List<String> nameOfBots = [
     'Premier bot',
@@ -63,49 +70,50 @@ class _DisplayFactionsState extends State<DisplayFactions> {
     'Quatrième bot',
   ];
 
-  final List<String> factionBots = [
+  final List<String> factionBotsBase = [
+    'Marquise Mécanique',
+  ];
+
+  final List<String> factionBotsUnderworld = [
     'Marquise Mécanique 2.0',
     'Canopée Électrique',
     'Alliance Automatisée',
     'Vagabot',
   ];
 
-  final List<String> faction = [
+  List<String> factionBots = [];
+
+  final List<String> factionBase = [
     'Marquise de Chat',
-    'Duché Souterrain',
     'Dynastie de la Canopée',
-    'Société des Colombes Unies',
     'Vagabond (premier)',
     'Compagnie de la Rivière',
-    'Royaume des Neiges',
-    'Cercle Arachnéen',
-    'Cabale des Nécropossums',
     'Alliance de la Forêt',
-    'Conspiration des Corvidés',
     'Culte des Lézards',
   ];
 
-  List<String> unselectedFaction = [
-    'Marquise de Chat',
+  final List<String> factionUnderworld = [
     'Duché Souterrain',
-    'Dynastie de la Canopée',
+    'Conspiration des Corvidés',
+  ];
+
+  final List<String> factionMarauder = [
+    'Seigneur des nuées',
+    'Les gardiens d\'airain',
+  ];
+
+  final List<String> factionFanMade1 = [
     'Société des Colombes Unies',
-    'Vagabond (premier)',
-    'Compagnie de la Rivière',
     'Royaume des Neiges',
     'Cercle Arachnéen',
     'Cabale des Nécropossums',
-    'Alliance de la Forêt',
-    'Conspiration des Corvidés',
-    'Culte des Lézards',
   ];
 
-  List<String> unselectedFactionBots = [
-    'Marquise Mécanique 2.0',
-    'Canopée Électrique',
-    'Alliance Automatisée',
-    'Vagabot',
-  ];
+  final List<String> faction = [];
+
+  List<String> unselectedFaction = [];
+
+  List<String> unselectedFactionBots = [];
 
   final Map<String, int> factionBotValue = {
     'Marquise Mécanique 2.0': 10,
@@ -116,7 +124,9 @@ class _DisplayFactionsState extends State<DisplayFactions> {
 
   final Map<String, int> factionValue = {
     'Marquise de Chat': 10,
+    'Seigneur des nuées' : 9,
     'Duché Souterrain': 8,
+    'Les gardiens d\'airain' : 8,
     'Dynastie de la Canopée': 7,
     'Société des Colombes Unies': 6,
     'Vagabond (premier)': 5,
@@ -152,6 +162,19 @@ class _DisplayFactionsState extends State<DisplayFactions> {
 
   @override
   Widget build(BuildContext context) {
+    faction.addAll(factionBase);
+    factionBots.addAll(factionBotsBase);
+    if(extensionList['Monde souterrain']){
+     faction.addAll(factionUnderworld);
+     factionBots.clear();
+     factionBots.addAll(factionBotsUnderworld);
+    }
+    if(extensionList['Maraudeur']){
+      faction.addAll(factionMarauder);
+    }
+    if(extensionList['Fan faction saison 1']){
+      faction.addAll(factionFanMade1);
+    }
     while (total <= weight[numberOfPlayers + numberOfBots]) {
       unselectedFaction.clear();
       unselectedFaction.addAll(faction);
@@ -174,6 +197,9 @@ class _DisplayFactionsState extends State<DisplayFactions> {
             unselectedFaction.add('Vagabond (second)');
           }
           if (selectedFactionBots == 'Marquise Mécanique 2.0') {
+            unselectedFaction.remove('Marquise de Chat');
+          }
+          if (selectedFactionBots == 'Marquise Mécanique') {
             unselectedFaction.remove('Marquise de Chat');
           }
           if (selectedFactionBots == 'Canopée Électrique') {
