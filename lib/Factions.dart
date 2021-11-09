@@ -116,6 +116,7 @@ class _DisplayFactionsState extends State<DisplayFactions> {
   List<String> unselectedFactionBots = [];
 
   final Map<String, int> factionBotValue = {
+    'Marquise Mécanique': 10,
     'Marquise Mécanique 2.0': 10,
     'Canopée Électrique': 7,
     'Vagabot': 5,
@@ -303,8 +304,9 @@ class _DisplayFactionsState extends State<DisplayFactions> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(150),
+        child: Image(image: AssetImage('assets/images/root_background.png')),
       ),
       body: Container(
         margin: const EdgeInsets.only(left: 40.0, right: 40.0),

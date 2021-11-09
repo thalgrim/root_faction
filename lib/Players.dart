@@ -88,7 +88,7 @@ class _DisplayPlayersState extends State<DisplayPlayers> {
   }
 
   List<Widget> playerListDisplay() {
-    List<Widget> list = [];
+    List<Widget> list = [Text("Nom des joueurs :")];
     for (int i = 0; i < numberOfPlayers; i++) {
       list.add(
         TextField(
@@ -109,8 +109,9 @@ class _DisplayPlayersState extends State<DisplayPlayers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      appBar:PreferredSize(
+        preferredSize: const Size.fromHeight(150),
+        child: Image(image: AssetImage('assets/images/root_background.png')),
       ),
       body: Container(
         child: Column(

@@ -54,8 +54,9 @@ class _DisplayPlayerNumberState extends State<DisplayPlayerNumber> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(150),
+        child: Image(image: AssetImage('assets/images/root_background.png')),
       ),
       body: Container(
         margin: const EdgeInsets.all(20.0),
