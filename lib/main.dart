@@ -100,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Container(
           margin: const EdgeInsets.all(20.0),
           child: Column(children: [
-            Text("Choix des extensions :"),
+            Text("Choix des extensions :",style: TextStyle(fontSize: 20),),
             switchExtension1(),
             switchExtension2(),
             switchExtension3()

@@ -55,8 +55,7 @@ class _DisplayPlayersState extends State<DisplayPlayers> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    Factions(
+                builder: (context) => Factions(
                       title: 'Root : Assignation des factions',
                       numberOfPlayers: numberOfPlayers,
                       nameOfPlayers: playerList,
@@ -73,8 +72,7 @@ class _DisplayPlayersState extends State<DisplayPlayers> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    Bots(
+                builder: (context) => Bots(
                       title: 'Root : Nombre de bots',
                       numberOfPlayers: numberOfPlayers,
                       nameOfPlayers: playerList,
@@ -88,7 +86,12 @@ class _DisplayPlayersState extends State<DisplayPlayers> {
   }
 
   List<Widget> playerListDisplay() {
-    List<Widget> list = [Text("Nom des joueurs :")];
+    List<Widget> list = [
+      Text(
+        "Nom des joueurs :",
+        style: TextStyle(fontSize: 20),
+      )
+    ];
     for (int i = 0; i < numberOfPlayers; i++) {
       list.add(
         TextField(
@@ -109,13 +112,15 @@ class _DisplayPlayersState extends State<DisplayPlayers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:PreferredSize(
+      appBar: PreferredSize(
         preferredSize: const Size.fromHeight(150),
         child: Image(image: AssetImage('assets/images/root_background.png')),
       ),
-      body: Container(
-        child: Column(
-          children: playerListDisplay(),
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: playerListDisplay(),
+          ),
         ),
       ),
       floatingActionButton: floatingActionButton(),
